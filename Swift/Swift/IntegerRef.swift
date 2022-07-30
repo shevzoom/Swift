@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  IntegerRef.swift
 //  Swift
 //
 //  Created by g.shevchenko on 30.07.2022.
@@ -12,8 +12,8 @@ class IntegerRef: Equatable {
     init(_ value: Int) {
         self.value = value
     }
-}
-
-func ==(lhs: IntegerRef, rhs: IntegerRef) -> Bool {
-    return lhs.value == rhs.value
+    
+    func ==(lhs: IntegerRef, rhs: IntegerRef) -> Bool {
+        return lhs.value == rhs.value
+    }
 }
