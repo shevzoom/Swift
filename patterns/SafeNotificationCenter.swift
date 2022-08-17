@@ -20,9 +20,9 @@ class NotificationCenter {
     }
     
     func post(event: String, object: Any?) {
-        if let newSubscribers = subscribers[event] as? [Observer] {
-            for i in newSubscribers {
-                i.observe(event: event, object: object, notificationCenter: self)
+        if let subscribers = subscribers[event] as? [Observer] {
+            for subscriber in subscribers {
+                subscriber.observe(event: event, object: object, notificationCenter: self)
             }
         }
         
