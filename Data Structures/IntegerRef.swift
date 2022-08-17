@@ -8,7 +8,9 @@
 import Foundation
 
 class IntegerRef: Equatable {
+
     let value: Int
+
     init(_ value: Int) {
         self.value = value
     }
