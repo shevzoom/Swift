@@ -1,10 +1,10 @@
 # Some lifeHacks
 
 
-- Data Structures
+1. Data Structures
 + Hash Table
 + Weak Array (reference collection)
 + overload == and ===
 
-- Patterns 
-+ Observer
+2. Patterns 
++ thread-safe Notification centre (Observer)
