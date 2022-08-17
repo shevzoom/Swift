@@ -3,4 +3,5 @@
 
 # Dispatch Barrier
 - документация [dispatch_barrier](https://developer.apple.com/documentation/dispatch/dispatch_barrier)
+
 ![8](https://user-images.githubusercontent.com/64494962/185087561-02c77cbc-a6d2-4f16-a52a-b543c0412cd6.png)
