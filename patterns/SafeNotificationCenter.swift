@@ -1,37 +1,42 @@
 import Foundation
 
 protocol Observer: AnyObject {
-    func observe(event: String, object: Any?, notificationCenter: NotificationCenter)
+    func observe(event: String, object: Any?, notificationCentre: NotificationCentre)
 }
 
-class NotificationCenter {
+class NotificationCentre {
     
-    static let shared = NotificationCenter()
+    static let shared = NotificationCentre()
     
+    private let syncQueue = DispatchQueue(label: "notificationCentre", attributes: .concurrent)
     private var subscribers: [String: NSHashTable<AnyObject>] = [:]
+    
     private init() {}
     
     func add(_ observer: Observer, forEvent event: String) {
-        subscribers[event, default: NSHashTable<AnyObject>.weakObjects()].add(observer)
+        syncQueue.async(flags: .barrier) {
+            self.subscribers[event, default: NSHashTable.weakObjects()].add(observer)
+        }
     }
     
     func remove(_ observer: Observer, forEvent event: String) {
-        subscribers[event]?.remove(observer)
+        syncQueue.async(flags: [.barrier]) {
+            self.subscribers[event]?.remove(observer)
+        }
     }
     
     func post(event: String, object: Any?) {
-        if let subscribers = subscribers[event] as? [Observer] {
-            for subscriber in subscribers {
-                subscriber.observe(event: event, object: object, notificationCenter: self)
-            }
+        let subscribers = syncQueue.sync {
+            self.subscribers[event]?.allObjects as? [Observer]
         }
         
+        guard let subscribers = subscribers else { return }
+        subscribers.forEach { $0.observe(event: event, object: object, notificationCentre: self) }
     }
     
     func hasObserver(_ observer: Observer, forEvent event: String) -> Bool {
-        subscribers[event]?.contains(observer) == true
+        syncQueue.sync {
+            subscribers[event]?.contains(observer) == true
+        }
     }
 }
-
-
-
