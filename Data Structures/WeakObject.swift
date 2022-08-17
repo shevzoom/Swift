@@ -21,6 +21,6 @@ class WeakObject<T: AnyObject>: Equatable, Hashable {
     }
     
     func == <T> (lhs: WeakObject<T>, rhs: WeakObject<T>) -> Bool {
-        return lhs.object === rhs.object
+        lhs.object === rhs.object
     }
 }
